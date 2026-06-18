@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <!-- 6 Photo Slider (Absolutely no text) -->
+                <!-- 6 Photo Slider (Absolutely no overlay text) -->
                 <div class="lg:col-span-7 bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex flex-col justify-between min-h-[350px] relative group overflow-hidden">
                     <div class="relative w-full h-full rounded-xl overflow-hidden flex-grow min-h-[320px]">
                         
@@ -162,7 +162,7 @@
                 </div>
             </div>
 
-            <!-- Main Form Card -->
+            <!-- Main Form Card (Perfect Grammar & Clean Layout) -->
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
                 <div class="bg-gradient-to-r from-brand-darkTeal to-brand-teal p-6 text-white flex justify-between items-center">
                     <div>
@@ -223,7 +223,7 @@
                                 </select>
                             </div>
 
-                            <!-- Expected Class for Next Year -->
+                            <!-- Expected Class for Next Year (Auto calculated) -->
                             <div class="md:col-span-6">
                                 <label for="nextClass" class="block text-sm font-semibold text-slate-500 mb-2">الصف المستهدف للعام الدراسي القادم (تلقائي)</label>
                                 <input type="text" id="nextClass" readonly class="w-full px-4 py-3 rounded-xl border border-slate-100 bg-slate-50 text-slate-500 font-bold outline-none text-sm" placeholder="سيتم تحديده تلقائياً بناءً على الصف الحالي">
@@ -243,6 +243,7 @@
                             <div class="md:col-span-6">
                                 <label class="block text-sm font-semibold text-slate-700 mb-3">هل يرغب الطالب في الاستمرار بالمدرسة للعام القادم؟ <span class="text-red-500">*</span></label>
                                 <div class="grid grid-cols-2 gap-4">
+                                    <!-- Yes Option -->
                                     <label class="relative flex items-center justify-between p-4 rounded-xl border-2 border-slate-200 cursor-pointer transition hover:bg-slate-50" id="label-continue">
                                         <div class="flex items-center gap-3">
                                             <input type="radio" name="renewalStatus" value="استمرار" required onchange="toggleReasonField(false)" class="h-4 w-4 text-brand-teal border-slate-300 focus:ring-brand-teal">
@@ -251,20 +252,21 @@
                                         <span class="text-xs text-emerald-600 font-bold bg-emerald-50 px-2 py-1 rounded-md">تجديد القيد</span>
                                     </label>
                                     
+                                    <!-- No Option -->
                                     <label class="relative flex items-center justify-between p-4 rounded-xl border-2 border-slate-200 cursor-pointer transition hover:bg-slate-50" id="label-transfer">
                                         <div class="flex items-center gap-3">
                                             <input type="radio" name="renewalStatus" value="انتقال" onchange="toggleReasonField(true)" class="h-4 w-4 text-brand-teal border-slate-300 focus:ring-brand-teal">
                                             <span class="text-sm font-bold text-slate-700">لا، يرغب بالانتقال</span>
                                         </div>
-                                        <span class="text-xs text-rose-600 font-bold bg-rose-50 px-2 py-1 rounded-md">انتقال</span>
+                                        <span class="text-xs text-rose-600 font-bold bg-rose-50 px-2 py-1 rounded-md">انتقال لمدرسة أخرى</span>
                                     </label>
                                 </div>
                             </div>
 
-                            <!-- Reason for transfer -->
+                            <!-- Reason for transfer (conditional) -->
                             <div class="md:col-span-6 hidden" id="transferReasonContainer">
                                 <label for="transferReason" class="block text-sm font-semibold text-slate-700 mb-2">أسباب الرغبة في الانتقال من المدرسة (اختياري)</label>
-                                <textarea id="transferReason" rows="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-sm text-slate-800" placeholder="يرجى كتابة السبب لمساعدتنا على تحسين الخدمات التعليمية"></textarea>
+                                <textarea id="transferReason" rows="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-sm text-slate-800" placeholder="يرجى كتابة السبب لمساعدتنا على تحسين الخدمات التعليمية والوقوف على نواحي التطوير"></textarea>
                             </div>
                         </div>
                     </div>
@@ -316,9 +318,9 @@
                             <button type="button" onclick="resetForm()" class="flex-1 md:flex-initial px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-xl transition duration-200">
                                 إفراغ الاستمارة
                             </button>
-                            <button type="submit" id="submitBtn" class="flex-grow md:w-64 px-8 py-3 bg-brand-accent hover:bg-brand-goldHover text-brand-dark font-extrabold text-sm rounded-xl transition duration-200 shadow-md flex items-center justify-center gap-2">
+                            <button type="submit" class="flex-grow md:w-64 px-8 py-3 bg-brand-accent hover:bg-brand-goldHover text-brand-dark font-extrabold text-sm rounded-xl transition duration-200 shadow-md flex items-center justify-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                <span id="submitBtnText">إرسال وتأكيد الطلب</span>
+                                إرسال وتأكيد الطلب
                             </button>
                         </div>
                     </div>
@@ -327,7 +329,7 @@
         </section>
 
 
-        <!-- TAB 2: Admin Dashboard -->
+        <!-- TAB 2: Admin Dashboard (Protected Gate & Full Statistics) -->
         <section id="tab-admin" class="hidden space-y-8">
             
             <!-- Dashboard Top Greeting -->
@@ -338,10 +340,6 @@
                     <p class="text-xs text-slate-500 mt-1">توضح أرقام القوة الاستيعابية المستهدفة والاحتياج المتوقع من الكوادر التعليمية</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="refreshData()" class="px-4 py-2 bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200 text-xs font-bold rounded-lg transition duration-200 flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H12v3"/></svg>
-                        تحديث فوري للسحابة
-                    </button>
                     <button onclick="exportToCSV()" class="px-4 py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold rounded-lg transition duration-200 flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                         تصدير البيانات (CSV)
@@ -508,7 +506,7 @@
 
     </main>
 
-    <!-- Admin Gate Modal / Login -->
+    <!-- Admin Gate Modal / Login (Sleek UI for protection) -->
     <div id="adminGateModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl border border-slate-100 space-y-6 relative overflow-hidden">
             <div class="absolute -top-12 -left-12 w-32 h-32 bg-brand-teal/5 rounded-full"></div>
@@ -544,17 +542,15 @@
                     </button>
                 </div>
             </form>
-
-            <div class="text-center pt-4 border-t border-slate-50">
-                <span class="text-[10px] text-slate-400">تنويه: الدخول الافتراضي للإدارة هو: اسم المستخدم <code class="bg-slate-100 p-1 rounded font-bold">admin</code> وكلمة المرور <code class="bg-slate-100 p-1 rounded font-bold">basma2026</code></span>
-            </div>
         </div>
     </div>
 
 
-    <!-- Status Toast Notifications -->
+    <!-- Status Toast Notifications (Elegant Alternative to Native Browser Alert) -->
     <div id="toastNotification" class="fixed bottom-6 right-6 bg-slate-900 text-white rounded-2xl p-4 shadow-2xl flex items-center gap-3 max-w-md transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
-        <div id="toastIconContainer" class="p-2 rounded-xl text-emerald-500 bg-emerald-500/10"></div>
+        <div id="toastIconContainer" class="p-2 rounded-xl text-emerald-500 bg-emerald-500/10">
+            <!-- Icon Dynamic -->
+        </div>
         <div>
             <h4 id="toastTitle" class="text-sm font-bold">العملية ناجحة</h4>
             <p id="toastMsg" class="text-xs text-slate-300 mt-0.5">تم حفظ البيانات المدخلة بنجاح.</p>
@@ -573,33 +569,31 @@
 
     <!-- JAVASCRIPT Logic & State Management -->
     <script>
-        // ==========================================
-        // 🌐 الرابط السحابي لجداول بيانات جوجل (Google Sheets API)
-        // قم بلصق رابط الويب التابع لجوجل هنا بعد تفعيل البرمجية
-        // ==========================================
-        const CLOUD_DATABASE_URL = "https://script.google.com/macros/s/AKfycbygCFhFcZLW0Vs1jYwlNaA8m0V5rpIVGEt0LtC6ScsAQ92Oa5p5aM-mb0xjwwLygQRalg/exec"; 
-
+        // Tab system
         let currentTab = 'form';
         let isAdminAuthenticated = false;
 
         // Photo Slider Logic (6 images)
         let currentSlide = 0;
         const totalSlides = 6;
-        const slideIntervalTime = 5000;
+        const slideIntervalTime = 5000; // 5 seconds
         let slideTimer;
 
-        // القالب الافتراضي لتأسيس البيانات في حال عدم تفعيل السحابة أو الكوكيز لأول مرة
-        const DEFAULT_MOCK_DATA = [
-            { id: 1, name: "عمر خالد صالح الفرجاني", nationalId: "20150987112", gender: "ذكر", currentClass: "الصف الثالث", nextClass: "الصف الرابع الابتدائي", status: "استمرار", parentName: "خالد صالح الفرجاني", parentPhone: "0912233441", email: "khaled@test.com", notes: "يرجى مراعاة وضعه مع زملائه من الفصل الماضي", transferReason: "" },
-            { id: 2, name: "رتاج عبد السلام مصطفى السويحلي", nationalId: "20140234125", gender: "أنثى", currentClass: "الصف الرابع", nextClass: "الصف الخامس الابتدائي", status: "استمرار", parentName: "عبد السلام مصطفى السويحلي", parentPhone: "0924455662", email: "", notes: "", transferReason: "" },
-            { id: 3, name: "يوسف إبراهيم محمد الورفلي", nationalId: "20130876123", gender: "ذكر", currentClass: "الصف الخامس", nextClass: "الصف السادس الابتدائي", status: "انتقال", parentName: "إبراهيم محمد الورفلي", parentPhone: "0915566773", email: "ibrahim@test.com", notes: "", transferReason: "بسبب انتقال العائلة إلى مدينة أخرى" },
-            { id: 4, name: "مريم عبد الرؤوف عاشور الشريف", nationalId: "20120981234", gender: "أنثى", currentClass: "الصف السادس", nextClass: "الصف السابع الأساسي", status: "استمرار", parentName: "عبد الرؤوف عاشور الشريف", parentPhone: "0921122334", email: "raouf@test.com", notes: "ممتازة جداً في الأنشطة الثقافية", transferReason: "" },
-            { id: 5, name: "معاذ عبدالوهاب طارق الترهوني", nationalId: "20110345672", gender: "ذكر", currentClass: "الصف السابع", nextClass: "الصف الثامن الأساسي", status: "استمرار", parentName: "عبدالوهاب طارق الترهوني", parentPhone: "0918899001", email: "", notes: "", transferReason: "" }
+        // Mock Submission Database State (Prepopulated with 10 high-quality records)
+        let submissions = [
+            { id: 1, name: "عمر خالد صالح الفرجاني", nationalId: "20150987112", gender: "ذكر", currentClass: "الصف الثالث", nextClass: "الصف الرابع", status: "استمرار", parentName: "خالد صالح الفرجاني", parentPhone: "0912233441", email: "khaled@test.com", notes: "يرجى مراعاة وضعه مع زملائه من الفصل الماضي", transferReason: "" },
+            { id: 2, name: "رتاج عبد السلام مصطفى السويحلي", nationalId: "20140234125", gender: "أنثى", currentClass: "الصف الرابع", nextClass: "الصف الخامس", status: "استمرار", parentName: "عبد السلام مصطفى السويحلي", parentPhone: "0924455662", email: "", notes: "", transferReason: "" },
+            { id: 3, name: "يوسف إبراهيم محمد الورفلي", nationalId: "20130876123", gender: "ذكر", currentClass: "الصف الخامس", nextClass: "الصف السادس", status: "انتقال", parentName: "إبراهيم محمد الورفلي", parentPhone: "0915566773", email: "ibrahim@test.com", notes: "", transferReason: "بسبب انتقال العائلة إلى مدينة أخرى" },
+            { id: 4, name: "مريم عبد الرؤوف عاشور الشريف", nationalId: "20120981234", gender: "أنثى", currentClass: "الصف السادس", nextClass: "الصف السابع", status: "استمرار", parentName: "عبد الرؤوف عاشور الشريف", parentPhone: "0921122334", email: "raouf@test.com", notes: "ممتازة جداً في الأنشطة الثقافية", transferReason: "" },
+            { id: 5, name: "معاذ عبدالوهاب طارق الترهوني", nationalId: "20110345672", gender: "ذكر", currentClass: "الصف السابع", nextClass: "الصف الثامن", status: "استمرار", parentName: "عبدالوهاب طارق الترهوني", parentPhone: "0918899001", email: "", notes: "", transferReason: "" },
+            { id: 6, name: "سند جلال رمضان الغرياني", nationalId: "20100456218", gender: "ذكر", currentClass: "الصف الثامن", nextClass: "الصف الأول الثانوي", status: "انتقال", parentName: "جلال رمضان الغرياني", parentPhone: "0923344558", email: "", notes: "", transferReason: "تغيير مكان السكن" },
+            { id: 7, name: "عائشة عبدالرحيم سالم البوعيشي", nationalId: "20090123548", gender: "أنثى", currentClass: "الصف الأول الثانوي", nextClass: "الصف الثاني الثانوي", status: "استمرار", parentName: "عبدالرحيم سالم البوعيشي", parentPhone: "0916677889", email: "salem@test.com", notes: "", transferReason: "" },
+            { id: 8, name: "عبدالله مصطفى عبدالله الككلي", nationalId: "20160784112", gender: "ذكر", currentClass: "الصف الثاني", nextClass: "الصف الثالث", status: "استمرار", parentName: "مصطفى عبدالله الككلي", parentPhone: "0924488331", email: "", notes: "", transferReason: "" },
+            { id: 9, name: "رواء طارق أحمد الزنتاني", nationalId: "20140234188", gender: "أنثى", currentClass: "الصف الرابع", nextClass: "الصف الخامس", status: "استمرار", parentName: "طارق أحمد الزنتاني", parentPhone: "0917711225", email: "tareq@test.com", notes: "", transferReason: "" },
+            { id: 10, name: "محمد صلاح الدين بشير العجيلي", nationalId: "20120512399", gender: "ذكر", currentClass: "الصف السادس", nextClass: "الصف السابع", status: "انتقال", parentName: "صلاح الدين بشير العجيلي", parentPhone: "0929944551", email: "", notes: "", transferReason: "بسبب ظروف مادية ورغبة بالتسجيل في مدرسة حكومية" }
         ];
 
-        let submissions = [];
-
-        // إعدادات السعة الاستيعابية للفصول المستهدفة
+        // Capacity bounds configurations for statistics (30 students per class limit)
         const capacityConfigs = {
             "الصف الثاني": { label: "الثاني", limit: 30 },
             "الصف الثالث": { label: "الثالث", limit: 30 },
@@ -613,69 +607,34 @@
         };
 
         window.onload = function() {
+            // Start Slider Automatically
             resetSliderTimer();
-            initializeDatabase();
-        }
-
-        // --- تهيئة قاعدة البيانات المحلية والسحابية ---
-        async function initializeDatabase() {
-            if (CLOUD_DATABASE_URL !== "") {
-                // جلب فوري للبيانات من سحابة جوجل
-                await fetchCloudData();
-            } else {
-                // جلب البيانات من الذاكرة المحلية (LocalStorage) لتظل مستمرة
-                const localData = localStorage.getItem('basma_submissions');
-                if (localData) {
-                    submissions = JSON.parse(localData);
-                } else {
-                    submissions = DEFAULT_MOCK_DATA;
-                    localStorage.setItem('basma_submissions', JSON.stringify(submissions));
-                }
-                updateDashboardMetrics();
-            }
-        }
-
-        async function fetchCloudData() {
-            try {
-                showToast("جاري المزامنة", "جاري الاتصال بقاعدة البيانات السحابية لقراءة البيانات...", "info");
-                const response = await fetch(CLOUD_DATABASE_URL);
-                const data = await response.json();
-                if (Array.isArray(data)) {
-                    submissions = data;
-                    updateDashboardMetrics();
-                    showToast("مزامنة ناجحة", "تم تحديث البيانات وقراءتها بنجاح من السحابة.", "success");
-                }
-            } catch (err) {
-                console.error("خطأ أثناء الاتصال بالسحابة: ", err);
-                showToast("خطأ مزامنة السحابة", "تعذر قراءة البيانات من جوجل. تم الانتقال لذاكرة التخزين المحلية الاحتياطية.", "warning");
-                // الانتقال للاحتياطي المحلي
-                const localData = localStorage.getItem('basma_submissions') || JSON.stringify(DEFAULT_MOCK_DATA);
-                submissions = JSON.parse(localData);
-                updateDashboardMetrics();
-            }
-        }
-
-        async function refreshData() {
-            if (CLOUD_DATABASE_URL === "") {
-                showToast("السحابة غير مفعلة", "النظام الآن يخزن محلياً فقط. يرجى تفعيل رابط جوجل في الكود للحفظ السحابي.", "warning");
-                return;
-            }
-            await fetchCloudData();
+            // Initialize Dashboard charts & tables
+            updateDashboardMetrics();
         }
 
         // --- Slider Functions ---
         function resetSliderTimer() {
             clearInterval(slideTimer);
-            slideTimer = setInterval(() => { nextSlide(); }, slideIntervalTime);
+            slideTimer = setInterval(() => {
+                nextSlide();
+            }, slideIntervalTime);
         }
 
         function showSlide(index) {
             const slides = document.querySelectorAll('.slider-item');
             const dots = document.querySelectorAll('.slide-dot');
-            if (index >= totalSlides) currentSlide = 0;
-            else if (index < 0) currentSlide = totalSlides - 1;
-            else currentSlide = index;
+            
+            // Boundary checks
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
 
+            // Adjust opacity and scale on elements
             slides.forEach((slide, i) => {
                 if (i === currentSlide) {
                     slide.classList.remove('opacity-0', 'scale-95');
@@ -686,6 +645,7 @@
                 }
             });
 
+            // Dot adjustment
             dots.forEach((dot, i) => {
                 if (i === currentSlide) {
                     dot.classList.remove('bg-slate-300', 'w-2');
@@ -697,9 +657,10 @@
             });
         }
 
-        function nextSlide() { showSlide(currentSlide + 1); resetSliderTimer(); }
-        function prevSlide() { showSlide(currentSlide - 1); resetSliderTimer(); }
-        function goToSlide(index) { showSlide(index); resetSliderTimer(); }
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+            resetSliderTimer();
+        }
 
         // --- Class Promotion Auto Computation ---
         function calculateNextClass() {
@@ -719,9 +680,14 @@
                 "الصف الثاني الثانوي": "الثالث الثانوي (خريج)"
             };
 
-            nextClassInput.value = nextMap[val] || "";
+            if (nextMap[val]) {
+                nextClassInput.value = nextMap[val];
+            } else {
+                nextClassInput.value = "";
+            }
         }
 
+        // --- Toggle Reason text area conditional validation ---
         function toggleReasonField(show) {
             const container = document.getElementById('transferReasonContainer');
             const reasonInput = document.getElementById('transferReason');
@@ -730,6 +696,7 @@
 
             if (show) {
                 container.classList.remove('hidden');
+                reasonInput.required = false; // keep it optional as requested but visible
                 labelTrans.classList.add('border-brand-teal', 'bg-slate-50');
                 labelCont.classList.remove('border-brand-teal', 'bg-slate-50');
             } else {
@@ -750,8 +717,10 @@
             if (tabId === 'form') {
                 tabForm.classList.remove('hidden');
                 tabAdmin.classList.add('hidden');
+                
                 btnForm.classList.add('bg-brand-teal', 'text-white');
                 btnForm.classList.remove('bg-brand-lightTeal', 'text-brand-teal');
+                
                 currentTab = 'form';
             } else if (tabId === 'admin') {
                 if (!isAdminAuthenticated) {
@@ -760,14 +729,16 @@
                 }
                 tabForm.classList.add('hidden');
                 tabAdmin.classList.remove('hidden');
+                
                 btnForm.classList.remove('bg-brand-teal', 'text-white');
                 btnForm.classList.add('bg-brand-lightTeal', 'text-brand-teal');
+                
                 currentTab = 'admin';
                 updateDashboardMetrics();
             }
         }
 
-        // --- Security Authentication Gate ---
+        // --- Security / Authentication Gate Logic ---
         function openAdminGate() {
             if (isAdminAuthenticated) {
                 switchTab('admin');
@@ -782,6 +753,9 @@
             document.getElementById('loginErrorMessage').classList.add('hidden');
         }
 
+        // هنا يمكنك تغيير اسم المستخدم وكلمة المرور الافتراضية
+        // قم باستبدال 'admin' باسم المستخدم الجديد الذي تريده
+        // واستبدل 'basma2026' بكلمة المرور السرية الجديدة التي تختارها
         function handleAdminLogin(e) {
             e.preventDefault();
             const user = document.getElementById('adminUser').value.trim();
@@ -794,7 +768,8 @@
                 switchTab('admin');
                 document.getElementById('adminPass').value = "";
             } else {
-                document.getElementById('loginErrorMessage').classList.remove('hidden');
+                const err = document.getElementById('loginErrorMessage');
+                err.classList.remove('hidden');
                 document.getElementById('adminPass').focus();
             }
         }
@@ -818,26 +793,25 @@
             if (type === 'success') {
                 iconCont.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
                 iconCont.className = "p-2 rounded-xl text-emerald-500 bg-emerald-500/10";
+                toast.className = "fixed bottom-6 right-6 bg-slate-900 text-white rounded-2xl p-4 shadow-2xl flex items-center gap-3 max-w-md transform translate-y-0 opacity-100 transition-all duration-300 z-50";
             } else if (type === 'info') {
                 iconCont.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
                 iconCont.className = "p-2 rounded-xl text-sky-400 bg-sky-400/10";
+                toast.className = "fixed bottom-6 right-6 bg-slate-900 text-white rounded-2xl p-4 shadow-2xl flex items-center gap-3 max-w-md transform translate-y-0 opacity-100 transition-all duration-300 z-50";
             } else {
                 iconCont.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
                 iconCont.className = "p-2 rounded-xl text-amber-500 bg-amber-500/10";
+                toast.className = "fixed bottom-6 right-6 bg-slate-900 text-white rounded-2xl p-4 shadow-2xl flex items-center gap-3 max-w-md transform translate-y-0 opacity-100 transition-all duration-300 z-50";
             }
 
-            toast.className = "fixed bottom-6 right-6 bg-slate-900 text-white rounded-2xl p-4 shadow-2xl flex items-center gap-3 max-w-md transform translate-y-0 opacity-100 transition-all duration-300 z-50";
             setTimeout(() => {
                 toast.className = "fixed bottom-6 right-6 bg-slate-900 text-white rounded-2xl p-4 shadow-2xl flex items-center gap-3 max-w-md transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50";
             }, 3500);
         }
 
         // --- Handle Form Submissions ---
-        async function handleFormSubmit(event) {
+        function handleFormSubmit(event) {
             event.preventDefault();
-
-            const submitBtn = document.getElementById('submitBtn');
-            const submitBtnText = document.getElementById('submitBtnText');
 
             const studentName = document.getElementById('studentName').value.trim();
             const nationalId = document.getElementById('nationalId').value.trim();
@@ -848,7 +822,10 @@
             const renewalOptions = document.getElementsByName('renewalStatus');
             let status = "استمرار";
             for (let option of renewalOptions) {
-                if (option.checked) { status = option.value; break; }
+                if (option.checked) {
+                    status = option.value;
+                    break;
+                }
             }
 
             const transferReason = document.getElementById('transferReason').value.trim();
@@ -859,7 +836,7 @@
 
             const isDuplicate = submissions.some(sub => sub.nationalId === nationalId);
             if (isDuplicate) {
-                showToast("تكرار في التسجيل!", "الرقم الوطني المُدخل مسجل مسبقاً في قاعدة القيد.", "warning");
+                showToast("تكرار في التسجيل!", "الرقم الوطني المُدخل مسجل مسبقاً في قاعدة قيد مدرسة البسمة.", "warning");
                 return;
             }
 
@@ -878,41 +855,8 @@
                 transferReason: transferReason
             };
 
-            // تعطيل الزر مؤقتاً أثناء الحفظ
-            submitBtn.disabled = true;
-            submitBtnText.innerText = "جاري إرسال الطلب سحابياً...";
-
-            if (CLOUD_DATABASE_URL !== "") {
-                // حفظ سحابي على جداول بيانات جوجل
-                try {
-                    const response = await fetch(CLOUD_DATABASE_URL, {
-                        method: 'POST',
-                        mode: 'no-cors', // لتفادي مشاكل CORS لطلبات جوجل الفردية
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(newRecord)
-                    });
-                    
-                    // نقوم بإضافة الطلب محلياً أيضاً كنسخة احتياطية
-                    submissions.push(newRecord);
-                    localStorage.setItem('basma_submissions', JSON.stringify(submissions));
-                    showToast("تم الحفظ سحابياً", "تم تسجيل طلب التجديد وحفظه في جدول بيانات جوجل الإداري.", "success");
-                } catch (error) {
-                    console.error("تعذر الإرسال لجوجل: ", error);
-                    // في حال فشل السحابة، احفظ محلياً
-                    submissions.push(newRecord);
-                    localStorage.setItem('basma_submissions', JSON.stringify(submissions));
-                    showToast("حفظ احتياطي محلي", "تم الحفظ محلياً في المتصفح لتعذر الاتصال بالسحابة مؤقتاً.", "warning");
-                }
-            } else {
-                // حفظ محلي في حال عدم تهيئة السحابة بعد
-                submissions.push(newRecord);
-                localStorage.setItem('basma_submissions', JSON.stringify(submissions));
-                showToast("تم تأكيد رغبتكم", "تم حفظ الاستمارة بنجاح في قاعدة البيانات المحلية لجهازك.", "success");
-            }
-
-            submitBtn.disabled = false;
-            submitBtnText.innerText = "إرسال وتأكيد الطلب";
-
+            submissions.push(newRecord);
+            showToast("تم تأكيد رغبتكم", "تمت مراجعة وتسجيل الاستمارة بنجاح في قاعدة البيانات.", "success");
             resetForm();
             updateDashboardMetrics();
         }
@@ -923,7 +867,7 @@
             toggleReasonField(false);
         }
 
-        // --- الإحصائيات الرياضية والرسوم البيانية للمحيط الإداري ---
+        // --- Statistical Computations for Dashboard ---
         function updateDashboardMetrics() {
             const total = submissions.length;
             const renewed = submissions.filter(s => s.status === 'استمرار').length;
@@ -950,6 +894,7 @@
         function renderClassBarCharts() {
             const container = document.getElementById('class-statistics-bars');
             container.innerHTML = "";
+
             const classes = Object.keys(capacityConfigs);
 
             classes.forEach(cls => {
@@ -958,10 +903,9 @@
                 const classRenewed = classSubs.filter(s => s.status === 'استمرار').length;
                 const classLeaving = classSubs.filter(s => s.status === 'انتقال').length;
 
-                const maxVal = Math.max(...classes.map(c => submissions.filter(s => s.currentClass === c).length), 1);
-                
-                const greenShare = classTotal > 0 ? Math.round((classRenewed / maxVal) * 100) : 0;
-                const redShare = classTotal > 0 ? Math.round((classLeaving / maxVal) * 100) : 0;
+                const maxClassTotalInDataset = Math.max(...classes.map(c => submissions.filter(s => s.currentClass === c).length), 1);
+                const greenShare = classTotal > 0 ? (classRenewed / classTotal) * 100 : 0;
+                const redShare = classTotal > 0 ? (classLeaving / classTotal) * 100 : 0;
 
                 const rowHTML = `
                     <div class="space-y-1.5">
@@ -970,8 +914,8 @@
                             <span class="text-slate-500 font-semibold">إجمالي: <strong class="text-slate-800">${classTotal}</strong> | مستمر: <strong class="text-emerald-600">${classRenewed}</strong> | مغادر: <strong class="text-rose-600">${classLeaving}</strong></span>
                         </div>
                         <div class="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden flex">
-                            <div style="width: ${greenShare}%" class="bg-emerald-500 h-full transition-all duration-500" title="مستمرون"></div>
-                            <div style="width: ${redShare}%" class="bg-rose-400 h-full transition-all duration-500" title="مغادرون"></div>
+                            ${classRenewed > 0 ? `<div style="width: ${classRenewed * 10}%" class="bg-emerald-500 h-full transition-all duration-500" title="مستمرون"></div>` : ''}
+                            ${classLeaving > 0 ? `<div style="width: ${classLeaving * 10}%" class="bg-rose-400 h-full transition-all duration-500" title="مغادرون"></div>` : ''}
                         </div>
                     </div>
                 `;
@@ -982,6 +926,7 @@
         function renderCapacityWarnings() {
             const container = document.getElementById('capacity-indicators');
             container.innerHTML = "";
+
             const classes = Object.keys(capacityConfigs);
 
             classes.slice(0, 5).forEach(cls => {
@@ -1050,6 +995,7 @@
             });
         }
 
+        // --- Live Filtering and Search inside Admin View ---
         function filterSubmissionsTable() {
             const searchQuery = document.getElementById('searchBar').value.toLowerCase().trim();
             const selectedClass = document.getElementById('filterClass').value;
@@ -1068,13 +1014,14 @@
             populateSubmissionsTable(filtered);
         }
 
+        // --- Export Submissions to CSV format ---
         function exportToCSV() {
             if (submissions.length === 0) {
                 showToast("لا توجد بيانات", "لا توجد سجلات متاحة للتصدير حالياً.", "warning");
                 return;
             }
 
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // UTF-8 BOM
             csvContent += "الرقم التسلسلي,اسم الطالب,الرقم الوطني,الجنس,الصف الحالي,الصف القادم,رغبة التجديد,اسم ولي الأمر,رقم الهاتف,البريد الإلكتروني,الأسباب والملاحظات\n";
 
             submissions.forEach((item, index) => {
@@ -1099,6 +1046,7 @@
             link.setAttribute("href", encodedUri);
             link.setAttribute("download", `استمارات_تجديد_قيد_مدرسة_البسمة_${new Date().getFullYear()}.csv`);
             document.body.appendChild(link);
+
             link.click();
             document.body.removeChild(link);
             showToast("تم تنزيل الملف", "تم حفظ وتصدير قاعدة البيانات بنجاح في صيغة CSV.", "success");
