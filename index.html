@@ -201,7 +201,7 @@
                                 </select>
                             </div>
 
-                            <!-- الصف الدراسي الحالي -->
+                            <!-- :الصف الدراسي الحالي -->
                             <div class="md:col-span-6">
                                 <label for="currentClass" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">الصف الدراسي الحالي <span class="text-red-500">*</span></label>
                                 <select id="currentClass" onchange="calculateNextClass()" required class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800">
@@ -643,14 +643,14 @@
                     try {
                         const searchParams = new URLSearchParams();
                         searchParams.append("id", sub.id);
-                        searchParams.append("studentName", sub.name); 
-                        searchParams.append("nationalId", sub.nationalId);
-                        searchParams.append("gender", sub.gender);
-                        searchParams.append("currentClass", sub.currentClass);
-                        searchParams.append("nextClass", sub.nextClass);
-                        searchParams.append("status", sub.status);
-                        searchParams.append("parentName", sub.parentName);
-                        searchParams.append("parentPhone", sub.parentPhone);
+                        searchParams.append("studentName", sub.name || sub.studentName || ""); 
+                        searchParams.append("nationalId", sub.nationalId || "");
+                        searchParams.append("gender", sub.gender || "");
+                        searchParams.append("currentClass", sub.currentClass || "");
+                        searchParams.append("nextClass", sub.nextClass || "");
+                        searchParams.append("status", sub.status || "");
+                        searchParams.append("parentName", sub.parentName || "");
+                        searchParams.append("parentPhone", sub.parentPhone || "");
                         searchParams.append("email", sub.email || "");
                         searchParams.append("notes", sub.notes || "");
                         searchParams.append("transferReason", sub.transferReason || "");
@@ -684,6 +684,20 @@
             }
         }
 
+        // دالة مساعدة لتصفية السجلات المكررة بناءً على الرقم الوطني
+        function removeDuplicates(array) {
+            if (!Array.isArray(array)) return [];
+            const seen = new Set();
+            return array.filter(item => {
+                if (!item) return false;
+                const natId = (item.nationalId || '').toString().trim();
+                if (!natId) return true; // إذا لم يكن هناك رقم وطني، اسمح بمروره تفادياً لحذفه
+                const duplicate = seen.has(natId);
+                seen.add(natId);
+                return !duplicate;
+            });
+        }
+
         // --- وظيفة جلب البيانات الحية والمباشرة من سحابة جوجل إكسل ---
         async function fetchSubmissionsFromCloud() {
             if (GOOGLE_SCRIPT_URL === "") {
@@ -698,16 +712,18 @@
                     if (Array.isArray(cloudData)) {
                         // دمج البيانات السحابية مع البيانات المحلية غير المرفوعة لتفادي ضياعها
                         let localData = JSON.parse(localStorage.getItem('basma_submissions')) || [];
-                        let unsyncedRecords = localData.filter(s => !s.synced);
+                        let unsyncedRecords = localData.filter(s => s && !s.synced);
                         
                         let merged = [...cloudData];
                         unsyncedRecords.forEach(localRec => {
-                            if (!merged.some(cloudRec => cloudRec.nationalId === localRec.nationalId)) {
+                            const localNatId = (localRec.nationalId || '').toString().trim();
+                            if (!merged.some(cloudRec => (cloudRec.nationalId || '').toString().trim() === localNatId)) {
                                 merged.push(localRec);
                             }
                         });
                         
-                        submissions = merged;
+                        // إزالة أي تكرارات في القائمة المدمجة لضمان نظافة البيانات
+                        submissions = removeDuplicates(merged);
                         localStorage.setItem('basma_submissions', JSON.stringify(submissions));
                         updateDashboardMetrics();
                         showToast("اكتمل التحديث", `تم العثور على (${cloudData.length}) استمارة قيد مسجلة سحابياً بنجاح.`, "success");
@@ -912,7 +928,7 @@
             const parentEmail = document.getElementById('parentEmail').value.trim();
             const notes = document.getElementById('notes').value.trim();
 
-            const isDuplicate = submissions.some(sub => sub.nationalId === nationalId);
+            const isDuplicate = submissions.some(sub => sub && (sub.nationalId || '').toString().trim() === nationalId.trim());
             if (isDuplicate) {
                 showToast("تكرار في التسجيل!", "الرقم الوطني المُدخل مسجل مسبقاً في قاعدة قيد مدرسة البسمة.", "warning");
                 return;
@@ -935,6 +951,8 @@
             };
 
             submissions.push(newRecord);
+            // إزالة أي تكرارات محتملة لحماية سلامة البيانات
+            submissions = removeDuplicates(submissions);
             localStorage.setItem('basma_submissions', JSON.stringify(submissions));
             
             showToast("جاري المعالجة...", "يتم الآن حفظ وتثبيت استمارة تجديد القيد...", "info");
@@ -986,9 +1004,12 @@
         }
 
         function updateDashboardMetrics() {
-            const total = submissions.length;
-            const renewed = submissions.filter(s => s.status === 'استمرار').length;
-            const leaving = submissions.filter(s => s.status === 'انتقال').length;
+            // تنظيف البيانات من أي خلايا فارغة أو تالفة قبل الحساب
+            const activeSubmissions = removeDuplicates(submissions.filter(s => s !== null && s !== undefined));
+            
+            const total = activeSubmissions.length;
+            const renewed = activeSubmissions.filter(s => s.status === 'استمرار').length;
+            const leaving = activeSubmissions.filter(s => s.status === 'انتقال').length;
 
             const renewedPercent = total > 0 ? Math.round((renewed / total) * 100) : 0;
             const leavingPercent = total > 0 ? Math.round((leaving / total) * 100) : 0;
@@ -1005,22 +1026,24 @@
 
             renderClassBarCharts();
             renderCapacityWarnings();
-            populateSubmissionsTable(submissions);
+            populateSubmissionsTable(activeSubmissions);
         }
 
         function renderClassBarCharts() {
             const container = document.getElementById('class-statistics-bars');
+            if (!container) return;
             container.innerHTML = "";
 
             const classes = Object.keys(capacityConfigs);
+            const activeSubmissions = submissions.filter(s => s !== null && s !== undefined);
 
             classes.forEach(cls => {
-                const classSubs = submissions.filter(s => s.currentClass === cls);
+                const classSubs = activeSubmissions.filter(s => s.currentClass === cls);
                 const classTotal = classSubs.length;
                 const classRenewed = classSubs.filter(s => s.status === 'استمرار').length;
                 const classLeaving = classSubs.filter(s => s.status === 'انتقال').length;
 
-                const maxClassTotalInDataset = Math.max(...classes.map(c => submissions.filter(s => s.currentClass === c).length), 1);
+                const maxClassTotalInDataset = Math.max(...classes.map(c => activeSubmissions.filter(s => s.currentClass === c).length), 1);
                 
                 const barWidthPercent = Math.max((classTotal / maxClassTotalInDataset) * 100, 2); 
                 const greenPercent = classTotal > 0 ? (classRenewed / classTotal) * 100 : 0;
@@ -1044,13 +1067,15 @@
 
         function renderCapacityWarnings() {
             const container = document.getElementById('capacity-indicators');
+            if (!container) return;
             container.innerHTML = "";
 
             const classes = Object.keys(capacityConfigs);
+            const activeSubmissions = submissions.filter(s => s !== null && s !== undefined);
 
             classes.slice(0, 5).forEach(cls => { 
                 const config = capacityConfigs[cls];
-                const continuingCount = submissions.filter(s => s.currentClass === cls && s.status === 'استمرار').length;
+                const continuingCount = activeSubmissions.filter(s => s.currentClass === cls && s.status === 'استمرار').length;
                 const limit = config.limit;
                 const emptySeats = Math.max(limit - continuingCount, 0);
                 const occupancyPercent = Math.round((continuingCount / limit) * 100);
@@ -1092,6 +1117,8 @@
             }
 
             data.forEach(item => {
+                if (!item) return;
+                
                 const statusBadge = item.status === 'استمرار' 
                     ? `<span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-bold rounded-full text-[10px] border border-emerald-100 inline-block">مستمر</span>`
                     : `<span class="px-2.5 py-1 bg-rose-50 text-rose-700 font-bold rounded-full text-[10px] border border-rose-100 inline-block">مغادر</span>`;
@@ -1100,15 +1127,23 @@
                     ? `<span class="text-rose-600 italic font-semibold">${item.transferReason || 'لم يذكر سبب'}</span>`
                     : `<span class="text-slate-400">${item.notes || '---'}</span>`;
 
+                // حماية من الحقول الفارغة لعدم تخريب مظهر الجدول
+                const studentNameVal = item.name || item.studentName || '---';
+                const nationalIdVal = item.nationalId || '---';
+                const currentClassVal = item.currentClass || '---';
+                const nextClassVal = item.nextClass || '---';
+                const parentNameVal = item.parentName || '---';
+                const parentPhoneVal = item.parentPhone || '---';
+
                 const row = `
                     <tr class="hover:bg-slate-50/50 transition duration-150 border-b border-slate-100">
-                        <td class="p-4 font-bold text-slate-800">${item.name || item.studentName || '---'}</td>
-                        <td class="p-4 text-slate-500 font-mono">${item.nationalId || '---'}</td>
-                        <td class="p-4 text-slate-600">${item.currentClass || '---'}</td>
-                        <td class="p-4 font-semibold text-brand-teal">${item.nextClass || '---'}</td>
+                        <td class="p-4 font-bold text-slate-800">${studentNameVal}</td>
+                        <td class="p-4 text-slate-500 font-mono">${nationalIdVal}</td>
+                        <td class="p-4 text-slate-600">${currentClassVal}</td>
+                        <td class="p-4 font-semibold text-brand-teal">${nextClassVal}</td>
                         <td class="p-4">${statusBadge}</td>
-                        <td class="p-4 text-slate-700">${item.parentName || '---'}</td>
-                        <td class="p-4 text-slate-500 font-mono">${item.parentPhone || '---'}</td>
+                        <td class="p-4 text-slate-700">${parentNameVal}</td>
+                        <td class="p-4 text-slate-500 font-mono">${parentPhoneVal}</td>
                         <td class="p-4 max-w-xs truncate" title="${item.status === 'انتقال' ? (item.transferReason || '') : (item.notes || '')}">${remarks}</td>
                     </tr>
                 `;
@@ -1135,11 +1170,17 @@
             const searchQuery = document.getElementById('searchBar').value.toLowerCase().trim();
             const selectedClass = document.getElementById('filterClass').value;
             const selectedStatus = document.getElementById('filterStatus').value;
+            
+            const activeSubmissions = submissions.filter(s => s !== null && s !== undefined);
 
-            const filtered = submissions.filter(item => {
-                const matchesSearch = item.name.toLowerCase().includes(searchQuery) || 
-                                      item.parentName.toLowerCase().includes(searchQuery) ||
-                                      item.nationalId.includes(searchQuery);
+            const filtered = activeSubmissions.filter(item => {
+                const studentNameVal = (item.name || item.studentName || '').toLowerCase();
+                const parentNameVal = (item.parentName || '').toLowerCase();
+                const nationalIdVal = (item.nationalId || '').toString();
+
+                const matchesSearch = studentNameVal.includes(searchQuery) || 
+                                      parentNameVal.includes(searchQuery) ||
+                                      nationalIdVal.includes(searchQuery);
                 const matchesClass = selectedClass === "" || item.currentClass === selectedClass;
                 const matchesStatus = selectedStatus === "" || item.status === selectedStatus;
 
@@ -1150,7 +1191,8 @@
         }
 
         function exportToCSV() {
-            if (submissions.length === 0) {
+            const activeSubmissions = removeDuplicates(submissions.filter(s => s !== null && s !== undefined));
+            if (activeSubmissions.length === 0) {
                 showToast("لا توجد بيانات", "لا توجد سجلات متاحة للتصدير حالياً.", "warning");
                 return;
             }
@@ -1158,17 +1200,18 @@
             let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
             csvContent += "الرقم التسلسلي,اسم الطالب,الرقم الوطني,الجنس,الصف الحالي,الصف القادم,رغبة التجديد,اسم ولي الأمر,رقم الهاتف,البريد الإلكتروني,الأسباب والملاحظات\n";
 
-            submissions.forEach((item, index) => {
+            activeSubmissions.forEach((item, index) => {
+                const studentNameVal = item.name || item.studentName || '---';
                 const row = [
                     index + 1,
-                    `"${item.name}"`,
-                    `"${item.nationalId}"`,
-                    `"${item.gender}"`,
-                    `"${item.currentClass}"`,
-                    `"${item.nextClass}"`,
+                    `"${studentNameVal}"`,
+                    `"${item.nationalId || ''}"`,
+                    `"${item.gender || ''}"`,
+                    `"${item.currentClass || ''}"`,
+                    `"${item.nextClass || ''}"`,
                     `"${item.status === 'استمرار' ? 'مستمر' : 'انتقال'}"`,
-                    `"${item.parentName}"`,
-                    `"${item.parentPhone}"`,
+                    `"${item.parentName || ''}"`,
+                    `"${item.parentPhone || ''}"`,
                     `"${item.email || 'غير متوفر'}"`,
                     `"${item.status === 'انتقال' ? (item.transferReason || 'لم يذكر سبب') : (item.notes || '---')}"`
                 ].join(",");
