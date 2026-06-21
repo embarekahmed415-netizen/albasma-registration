@@ -182,19 +182,19 @@
                             <!-- اسم الطالب الرباعي -->
                             <div class="md:col-span-6">
                                 <label for="studentName" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">اسم الطالب الرباعي <span class="text-red-500">*</span></label>
-                                <input type="text" id="studentName" required class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800" placeholder="أدخل اسم الطالب رباعياً كما هو في المستندات الرسمية">
+                                <input type="text" id="studentName" class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800" placeholder="أدخل اسم الطالب رباعياً كما هو في المستندات الرسمية">
                             </div>
 
                             <!-- الرقم الوطني -->
                             <div class="md:col-span-3">
                                 <label for="nationalId" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">الرقم الوطني / رقم الهوية <span class="text-red-500">*</span></label>
-                                <input type="text" id="nationalId" required pattern="[0-9]{11,15}" title="يرجى إدخال رقم وطني صحيح مكون من أرقام فقط" class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800 text-left" dir="ltr" placeholder="الرقم الوطني للطالب">
+                                <input type="text" id="nationalId" class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800 text-left" dir="ltr" placeholder="الرقم الوطني للطالب">
                             </div>
 
                             <!-- الجنس -->
                             <div class="md:col-span-3">
                                 <label for="gender" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">الجنس <span class="text-red-500">*</span></label>
-                                <select id="gender" required class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800">
+                                <select id="gender" class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800">
                                     <option value="" disabled selected>اختر الجنس</option>
                                     <option value="ذكر">ذكر</option>
                                     <option value="أنثى">أنثى</option>
@@ -204,7 +204,7 @@
                             <!-- :الصف الدراسي الحالي -->
                             <div class="md:col-span-6">
                                 <label for="currentClass" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">الصف الدراسي الحالي <span class="text-red-500">*</span></label>
-                                <select id="currentClass" onchange="calculateNextClass()" required class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800">
+                                <select id="currentClass" onchange="calculateNextClass()" class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800">
                                     <option value="" disabled selected>اختر الصف الدراسي الحالي للطالب</option>
                                     <option value="الصف الثاني">الصف الثاني الابتدائي</option>
                                     <option value="الصف الثالث">الصف الثالث الابتدائي</option>
@@ -241,7 +241,7 @@
                                     <!-- خيار نعم (استمرار) -->
                                     <label class="relative flex items-center justify-between p-3.5 sm:p-4 rounded-xl border-2 border-slate-200 cursor-pointer transition hover:bg-slate-50" id="label-continue">
                                         <div class="flex items-center gap-3">
-                                            <input type="radio" name="renewalStatus" value="استمرار" required onchange="toggleReasonField(false)" class="h-4 w-4 text-brand-teal border-slate-300 focus:ring-brand-teal">
+                                            <input type="radio" name="renewalStatus" value="استمرار" onchange="toggleReasonField(false)" class="h-4 w-4 text-brand-teal border-slate-300 focus:ring-brand-teal">
                                             <span class="text-xs sm:text-sm font-bold text-slate-700">نعم، يرغب بالاستمرار</span>
                                         </div>
                                         <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded">تجديد</span>
@@ -277,13 +277,13 @@
                             <!-- اسم ولي الأمر بالكامل -->
                             <div class="md:col-span-6">
                                 <label for="parentName" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">اسم ولي الأمر بالكامل <span class="text-red-500">*</span></label>
-                                <input type="text" id="parentName" required class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800" placeholder="أدخل اسم ولي أمر الطالب كاملاً">
+                                <input type="text" id="parentName" class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800" placeholder="أدخل اسم ولي أمر الطالب كاملاً">
                             </div>
 
                             <!-- رقم هاتف ولي الأمر -->
                             <div class="md:col-span-3">
                                 <label for="parentPhone" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">رقم الهاتف (متاح واتساب) <span class="text-red-500">*</span></label>
-                                <input type="tel" id="parentPhone" required placeholder="مثال: 0910000000" class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800 text-left" dir="ltr">
+                                <input type="tel" id="parentPhone" placeholder="مثال: 0910000000" class="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal/20 focus:border-brand-teal outline-none transition text-xs sm:text-sm text-slate-800 text-left" dir="ltr">
                             </div>
 
                             <!-- البريد الإلكتروني -->
@@ -303,7 +303,7 @@
                     <!-- التعهد وأزرار الإرسال المتجاوبة -->
                     <div class="pt-6 border-t border-slate-100 flex flex-col items-center gap-6">
                         <label class="flex items-start gap-3 max-w-2xl cursor-pointer">
-                            <input type="checkbox" required class="mt-1 h-4 w-4 text-brand-teal border-slate-300 rounded focus:ring-brand-teal">
+                            <input type="checkbox" class="mt-1 h-4 w-4 text-brand-teal border-slate-300 rounded focus:ring-brand-teal">
                             <span class="text-[10px] sm:text-xs text-slate-500 leading-relaxed">
                                 أتعهد بصفتي ولي أمر الطالب المذكور أعلاه بصحة كافة البيانات المدونة في هذه الاستمارة، وأقر بمعرفتي التامة بالآثار التنظيمية والمالية المترتبة على تحديد الرغبة بالاستمرار أو الانتقال.
                             </span>
@@ -369,7 +369,7 @@
                     </div>
                 </div>
 
-                <!-- طلبات تجديد القيد -->
+                <!-- :طلبات تجديد القيد -->
                 <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
                     <div class="p-3 sm:p-4 bg-emerald-50 text-emerald-600 rounded-xl">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -780,7 +780,7 @@
             });
         }
 
-        // --- تبديل النوافذ والتحقق الأمني ---
+        // --- تبديل النوافذ والتحقق الأمني المطور والمصحح ---
         function switchTab(tabId) {
             const tabForm = document.getElementById('tab-form');
             const tabAdmin = document.getElementById('tab-admin');
@@ -790,8 +790,11 @@
             if (tabId === 'form') {
                 tabForm.classList.remove('hidden');
                 tabAdmin.classList.add('hidden');
-                btnForm.classList.add('bg-brand-teal', 'text-white');
-                btnForm.classList.remove('bg-brand-lightTeal', 'text-brand-teal');
+                
+                // تفعيل الزر بصرياً بشكل دقيق ومباشر لجميع الأجهزة
+                btnForm.className = "flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-white bg-brand-teal transition duration-200 flex items-center justify-center gap-1.5";
+                btnAdmin.className = "flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-brand-teal bg-brand-lightTeal border border-brand-teal/20 hover:bg-brand-teal hover:text-white transition duration-200 flex items-center justify-center gap-1.5 shadow-sm";
+                
                 currentTab = 'form';
             } else if (tabId === 'admin') {
                 if (!isAdminAuthenticated) {
@@ -800,8 +803,11 @@
                 }
                 tabForm.classList.add('hidden');
                 tabAdmin.classList.remove('hidden');
-                btnForm.classList.remove('bg-brand-teal', 'text-white');
-                btnForm.classList.add('bg-brand-lightTeal', 'text-brand-teal');
+                
+                // تفعيل الزر النشط فوراً بمجرد تسجيل الدخول الناجح لمنع مشكلة النقر المكرر
+                btnAdmin.className = "flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-white bg-brand-teal transition duration-200 flex items-center justify-center gap-1.5 shadow-sm";
+                btnForm.className = "flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-brand-teal bg-brand-lightTeal border border-brand-teal/20 hover:bg-brand-teal hover:text-white transition duration-200 flex items-center justify-center gap-1.5";
+                
                 currentTab = 'admin';
                 fetchSubmissionsFromCloud();
             }
@@ -873,7 +879,12 @@
                 isAdminAuthenticated = true;
                 closeAdminGate();
                 showToast("نجح تسجيل الدخول", "مرحباً بك مجدداً في نظام الإدارة الرئيسي لمدرسة البسمة المتألقة.", "success");
-                switchTab('admin');
+                
+                // حل فوري ونهائي لمشكلة عدم التحويل التلقائي عند الضغط الأول
+                setTimeout(() => {
+                    switchTab('admin');
+                }, 100);
+                
                 document.getElementById('adminPass').value = "";
             } else {
                 const err = document.getElementById('loginErrorMessage');
@@ -904,6 +915,7 @@
             updateDashboardMetrics();
         }
 
+        // معالجة وحقن السجلات والتحقق اليدوي المتكامل لحل مشكلة توقف زر الإرسال نهائياً
         async function handleFormSubmit(event) {
             event.preventDefault();
 
@@ -914,7 +926,7 @@
             const nextClass = document.getElementById('nextClass').value;
             
             const renewalOptions = document.getElementsByName('renewalStatus');
-            let status = "استمرار";
+            let status = "";
             for (let option of renewalOptions) {
                 if (option.checked) {
                     status = option.value;
@@ -927,6 +939,54 @@
             const parentPhone = document.getElementById('parentPhone').value.trim();
             const parentEmail = document.getElementById('parentEmail').value.trim();
             const notes = document.getElementById('notes').value.trim();
+
+            // نظام تحقق يدوي شامل (Custom Form Validation) لحل مشاكل iframe في حظر التحقق الافتراضي
+            if (!studentName) {
+                showToast("حقل ناقص", "يرجى كتابة اسم الطالب الرباعي بالكامل.", "warning");
+                document.getElementById('studentName').focus();
+                return;
+            }
+            if (!nationalId) {
+                showToast("حقل ناقص", "يرجى كتابة الرقم الوطني أو رقم الهوية للطالب.", "warning");
+                document.getElementById('nationalId').focus();
+                return;
+            }
+            if (nationalId.length < 11 || nationalId.length > 15 || isNaN(nationalId)) {
+                showToast("بيانات غير صحيحة", "الرقم الوطني يجب أن يتكون من أرقام فقط (بين 11 إلى 15 خانة).", "warning");
+                document.getElementById('nationalId').focus();
+                return;
+            }
+            if (!gender) {
+                showToast("حقل ناقص", "يرجى تحديد جنس الطالب (ذكر / أنثى).", "warning");
+                document.getElementById('gender').focus();
+                return;
+            }
+            if (!currentClass) {
+                showToast("حقل ناقص", "يرجى تحديد الصف الدراسي الحالي للطالب.", "warning");
+                document.getElementById('currentClass').focus();
+                return;
+            }
+            if (!status) {
+                showToast("رغبة القيد مطلوبة", "يرجى تحديد قرار رغبة الطالب بالاستمرار أو الانتقال.", "warning");
+                return;
+            }
+            if (!parentName) {
+                showToast("حقل ناقص", "يرجى كتابة اسم ولي الأمر بالكامل.", "warning");
+                document.getElementById('parentName').focus();
+                return;
+            }
+            if (!parentPhone) {
+                showToast("حقل ناقص", "يرجى كتابة رقم هاتف ولي الأمر للتواصل.", "warning");
+                document.getElementById('parentPhone').focus();
+                return;
+            }
+
+            // فحص مربع تعهد ولي الأمر بصحة البيانات
+            const checkbox = document.querySelector('input[type="checkbox"]');
+            if (checkbox && !checkbox.checked) {
+                showToast("التعهد مطلوب", "يرجى تفعيل مربع الموافقة على صحة البيانات المكتوبة للتأكيد.", "warning");
+                return;
+            }
 
             const isDuplicate = submissions.some(sub => sub && (sub.nationalId || '').toString().trim() === nationalId.trim());
             if (isDuplicate) {
@@ -951,7 +1011,6 @@
             };
 
             submissions.push(newRecord);
-            // إزالة أي تكرارات محتملة لحماية سلامة البيانات
             submissions = removeDuplicates(submissions);
             localStorage.setItem('basma_submissions', JSON.stringify(submissions));
             
@@ -983,6 +1042,10 @@
                     });
 
                     newRecord.synced = true;
+                    // مزامنة حالة السجل المرفوع في قائمة الذاكرة الحية لتجنب التعارض
+                    const currentIdx = submissions.findIndex(s => s.id === newRecord.id);
+                    if (currentIdx !== -1) submissions[currentIdx].synced = true;
+
                     localStorage.setItem('basma_submissions', JSON.stringify(submissions));
                     showToast("تم الحفظ بنجاح السحابي", "تم إرسال وحفظ كافة الردود في جدول بيانات جوجل السحابي الخاص بك.", "success");
                 } catch (err) {
@@ -1004,7 +1067,6 @@
         }
 
         function updateDashboardMetrics() {
-            // تنظيف البيانات من أي خلايا فارغة أو تالفة قبل الحساب
             const activeSubmissions = removeDuplicates(submissions.filter(s => s !== null && s !== undefined));
             
             const total = activeSubmissions.length;
@@ -1053,7 +1115,7 @@
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between text-xs">
                             <span class="font-bold text-slate-700">${cls}</span>
-                            <span class="text-slate-500 font-semibold">إجمالي: <strong class="text-slate-800">${classTotal}</strong> | مستمر: <strong class="text-emerald-600">${classRenewed}</strong> | مغادر: <strong class="text-rose-600">${classLeaving}</strong></span>
+                            <span class="text-slate-500 font-semibold">إجمالي: <strong class="text-slate-800">${classTotal}</strong> | :مستمر <strong class="text-emerald-600">${classRenewed}</strong> | مغادر: <strong class="text-rose-600">${classLeaving}</strong></span>
                         </div>
                         <div class="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden flex">
                             ${classRenewed > 0 ? `<div style="width: ${greenPercent}%" class="bg-emerald-500 h-full transition-all duration-500" title="مستمرون"></div>` : ''}
