@@ -324,6 +324,7 @@
         </section>
 
 
+        <!-- TAB 2: Admin panel construction... -->
         <!-- القسم الثاني: لوحة تحكم الإدارة (محمية ومؤمنة وتجلب البيانات حياً ومباشرة من السحابة) -->
         <section id="tab-admin" class="hidden space-y-6 sm:space-y-8">
             
@@ -1070,6 +1071,48 @@
                     </div>
                 `;
                 container.innerHTML += elementHTML;
+            });
+        }
+
+        // --- دالة تعبئة وحقن السجلات المفصلة للطلاب في الجدول السفلي للوحة التحكم ---
+        function populateSubmissionsTable(data) {
+            const tableBody = document.getElementById('submissionsTableBody');
+            if (!tableBody) return;
+            tableBody.innerHTML = "";
+
+            if (!data || data.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center p-8 text-slate-400 font-semibold">
+                            لا توجد سجلات حالية. يرجى الضغط على زر "تحديث من السحابة" بالأعلى لجلب أحدث البيانات.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            data.forEach(item => {
+                const statusBadge = item.status === 'استمرار' 
+                    ? `<span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-bold rounded-full text-[10px] border border-emerald-100 inline-block">مستمر</span>`
+                    : `<span class="px-2.5 py-1 bg-rose-50 text-rose-700 font-bold rounded-full text-[10px] border border-rose-100 inline-block">مغادر</span>`;
+
+                const remarks = item.status === 'انتقال' 
+                    ? `<span class="text-rose-600 italic font-semibold">${item.transferReason || 'لم يذكر سبب'}</span>`
+                    : `<span class="text-slate-400">${item.notes || '---'}</span>`;
+
+                const row = `
+                    <tr class="hover:bg-slate-50/50 transition duration-150 border-b border-slate-100">
+                        <td class="p-4 font-bold text-slate-800">${item.name || item.studentName || '---'}</td>
+                        <td class="p-4 text-slate-500 font-mono">${item.nationalId || '---'}</td>
+                        <td class="p-4 text-slate-600">${item.currentClass || '---'}</td>
+                        <td class="p-4 font-semibold text-brand-teal">${item.nextClass || '---'}</td>
+                        <td class="p-4">${statusBadge}</td>
+                        <td class="p-4 text-slate-700">${item.parentName || '---'}</td>
+                        <td class="p-4 text-slate-500 font-mono">${item.parentPhone || '---'}</td>
+                        <td class="p-4 max-w-xs truncate" title="${item.status === 'انتقال' ? (item.transferReason || '') : (item.notes || '')}">${remarks}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
             });
         }
 
