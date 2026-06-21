@@ -591,7 +591,7 @@
     <script>
         // --- 🔗 الربط السحابي السليم مع Google Sheets 🔗 ---
         // ضع رابط الويب البرمجي المنسوخ من جوجل أدناه للربط السحابي المباشر
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-VxHjyANLiv-48MPajafZrp4UuqqZedfKB20lRmTJ2zx4wcRGB13yWBp_oSlSONoTgA/exec"; 
+        const GOOGLE_SCRIPT_URL = ""; 
 
         // تبديل وحماية النوافذ
         let currentTab = 'form';
@@ -674,9 +674,11 @@
             
             if (updated) {
                 localStorage.setItem('basma_submissions', JSON.stringify(localData));
-                // إذا كان الأدمن هو الذي يتصفح، نحدث الواجهة فوراً
+                submissions = localData; // مزامنة المتغير العام في الذاكرة لتجنب أي تعارض
                 if (isAdminAuthenticated && currentTab === 'admin') {
                     fetchSubmissionsFromCloud();
+                } else {
+                    updateDashboardMetrics();
                 }
             }
         }
@@ -693,10 +695,21 @@
                 if (response.ok) {
                     const cloudData = await response.json();
                     if (Array.isArray(cloudData)) {
-                        submissions = cloudData;
+                        // دمج البيانات السحابية مع البيانات المحلية غير المرفوعة لتفادي ضياعها
+                        let localData = JSON.parse(localStorage.getItem('basma_submissions')) || [];
+                        let unsyncedRecords = localData.filter(s => !s.synced);
+                        
+                        let merged = [...cloudData];
+                        unsyncedRecords.forEach(localRec => {
+                            if (!merged.some(cloudRec => cloudRec.nationalId === localRec.nationalId)) {
+                                merged.push(localRec);
+                            }
+                        });
+                        
+                        submissions = merged;
                         localStorage.setItem('basma_submissions', JSON.stringify(submissions));
                         updateDashboardMetrics();
-                        showToast("اكتمل التحديث", `تم العثور على (${submissions.length}) استمارة قيد مسجلة بنجاح.`, "success");
+                        showToast("اكتمل التحديث", `تم العثور على (${cloudData.length}) استمارة قيد مسجلة سحابياً بنجاح.`, "success");
                     } else {
                         showToast("خطأ في قراءة السحابة", "الرد المستلم من جوجل ليس في الصيغة المصفوفية الصحيحة.", "warning");
                     }
@@ -750,66 +763,7 @@
             });
         }
 
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-            resetSliderTimer();
-        }
-
-        function prevSlide() {
-            showSlide(currentSlide - 1);
-            resetSliderTimer();
-        }
-
-        function goToSlide(index) {
-            showSlide(index);
-            resetSliderTimer();
-        }
-
-        // --- احتساب الصف التلقائي المستقبلي للعام القادم ---
-        function calculateNextClass() {
-            const currentClassSelect = document.getElementById('currentClass');
-            const nextClassInput = document.getElementById('nextClass');
-            const val = currentClassSelect.value;
-
-            let nextMap = {
-                "الصف الثاني": "الصف الثالث الابتدائي",
-                "الصف الثالث": "الصف الرابع الابتدائي",
-                "الصف الرابع": "الصف الخامس الابتدائي",
-                "الصف الخامس": "الصف السادس الابتدائي",
-                "الصف السادس": "الصف السابع الأساسي",
-                "الصف السابع": "الصف الثامن الأساسي",
-                "الصف الثامن": "الصف الأول الثانوي",
-                "الصف الأول الثانوي": "الصف الثاني الثانوي",
-                "الصف الثاني الثانوي": "الثالث الثانوي (خريج)"
-            };
-
-            if (nextMap[val]) {
-                nextClassInput.value = nextMap[val];
-            } else {
-                nextClassInput.value = "";
-            }
-        }
-
-        // --- إظهار أو إخفاء حقل أسباب الانتقال برغبة ولي الأمر ---
-        function toggleReasonField(show) {
-            const container = document.getElementById('transferReasonContainer');
-            const reasonInput = document.getElementById('transferReason');
-            const labelCont = document.getElementById('label-continue');
-            const labelTrans = document.getElementById('label-transfer');
-
-            if (show) {
-                container.classList.remove('hidden');
-                labelTrans.classList.add('border-brand-teal', 'bg-slate-50');
-                labelCont.classList.remove('border-brand-teal', 'bg-slate-50');
-            } else {
-                container.classList.add('hidden');
-                reasonInput.value = "";
-                labelCont.classList.add('border-brand-teal', 'bg-slate-50');
-                labelTrans.classList.remove('border-brand-teal', 'bg-slate-50');
-            }
-        }
-
-        // --- تبديل النوافذ والتحقق ---
+        // --- تبديل النوافذ والتحقق الأمني ---
         function switchTab(tabId) {
             const tabForm = document.getElementById('tab-form');
             const tabAdmin = document.getElementById('tab-admin');
@@ -836,7 +790,49 @@
             }
         }
 
-        // --- لوحة التحكم وإجراءات التحقق الأمني ---
+        // --- بقية وظائف الكود والرسوم البيانية تظل ثابتة ومستقرة تماماً ---
+        function calculateNextClass() {
+            const currentClassSelect = document.getElementById('currentClass');
+            const nextClassInput = document.getElementById('nextClass');
+            const val = currentClassSelect.value;
+
+            let nextMap = {
+                "الصف الثاني": "الصف الثالث الابتدائي",
+                "الصف الثالث": "الصف الرابع الابتدائي",
+                "الصف الرابع": "الصف الخامس الابتدائي",
+                "الصف الخامس": "الصف السادس الابتدائي",
+                "الصف السادس": "الصف السابع الأساسي",
+                "الصف السابع": "الصف الثامن الأساسي",
+                "الصف الثامن": "الصف الأول الثانوي",
+                "الصف الأول الثانوي": "الصف الثاني الثانوي",
+                "الصف الثاني الثانوي": "الثالث الثانوي (خريج)"
+            };
+
+            if (nextMap[val]) {
+                nextClassInput.value = nextMap[val];
+            } else {
+                nextClassInput.value = "";
+            }
+        }
+
+        function toggleReasonField(show) {
+            const container = document.getElementById('transferReasonContainer');
+            const reasonInput = document.getElementById('transferReason');
+            const labelCont = document.getElementById('label-continue');
+            const labelTrans = document.getElementById('label-transfer');
+
+            if (show) {
+                container.classList.remove('hidden');
+                labelTrans.classList.add('border-brand-teal', 'bg-slate-50');
+                labelCont.classList.remove('border-brand-teal', 'bg-slate-50');
+            } else {
+                container.classList.add('hidden');
+                reasonInput.value = "";
+                labelCont.classList.add('border-brand-teal', 'bg-slate-50');
+                labelTrans.classList.remove('border-brand-teal', 'bg-slate-50');
+            }
+        }
+
         function openAdminGate() {
             if (isAdminAuthenticated) {
                 switchTab('admin');
@@ -875,7 +871,6 @@
             showToast("تم تسجيل الخروج", "تم قفل لوحة التحكم بأمان بنجاح.", "info");
         }
 
-        // --- وظائف نافذة التأكيد المخصصة بديلة confirm ---
         function openConfirmModal() {
             document.getElementById('confirmModal').classList.remove('hidden');
         }
@@ -892,7 +887,6 @@
             updateDashboardMetrics();
         }
 
-        // --- معالجة طلبات الإرسال ومزامنتها سحابياً ومحلياً ---
         async function handleFormSubmit(event) {
             event.preventDefault();
 
@@ -936,16 +930,14 @@
                 email: parentEmail,
                 notes: notes,
                 transferReason: transferReason,
-                synced: false // تبدأ كقيمة كاذبة حتى يتأكد الرفع لـ Google Sheets
+                synced: false
             };
 
-            // حفظ محلي احتياطي فوري
             submissions.push(newRecord);
             localStorage.setItem('basma_submissions', JSON.stringify(submissions));
             
             showToast("جاري المعالجة...", "يتم الآن حفظ وتثبيت استمارة تجديد القيد...", "info");
 
-            // محاولة إرسال البيانات فوراً لسحابة جوجل
             if (GOOGLE_SCRIPT_URL !== "") {
                 try {
                     const searchParams = new URLSearchParams();
@@ -971,7 +963,6 @@
                         body: searchParams
                     });
 
-                    // تحديث حالة الحفظ المحلي كـ "مرفوع بنجاح"
                     newRecord.synced = true;
                     localStorage.setItem('basma_submissions', JSON.stringify(submissions));
                     showToast("تم الحفظ بنجاح السحابي", "تم إرسال وحفظ كافة الردود في جدول بيانات جوجل السحابي الخاص بك.", "success");
@@ -987,14 +978,12 @@
             updateDashboardMetrics();
         }
 
-        // --- تصفير المدخلات ---
         function resetForm() {
             document.getElementById('enrollmentForm').reset();
             document.getElementById('nextClass').value = "";
             toggleReasonField(false);
         }
 
-        // --- معالجة الإحصائيات وبناء لوحات التحكم التفاعلية ---
         function updateDashboardMetrics() {
             const total = submissions.length;
             const renewed = submissions.filter(s => s.status === 'استمرار').length;
@@ -1084,47 +1073,21 @@
             });
         }
 
-        function populateSubmissionsTable(data) {
-            const tableBody = document.getElementById('submissionsTableBody');
-            tableBody.innerHTML = "";
-
-            if (data.length === 0) {
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="8" class="text-center p-8 text-slate-400 font-semibold">
-                            لا توجد سجلات حالية. اضغط على زر "تحديث من السحابة" لجلب الردود من جوجل شيت.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            data.forEach(item => {
-                const statusBadge = item.status === 'استمرار' 
-                    ? `<span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-bold rounded-full text-[10px] border border-emerald-100 inline-block">مستمر</span>`
-                    : `<span class="px-2.5 py-1 bg-rose-50 text-rose-700 font-bold rounded-full text-[10px] border border-rose-100 inline-block">مغادر</span>`;
-
-                const remarks = item.status === 'انتقال' 
-                    ? `<span class="text-rose-600 italic font-semibold">${item.transferReason || 'لم يذكر أسباب'}</span>`
-                    : `<span class="text-slate-400">${item.notes || '---'}</span>`;
-
-                const row = `
-                    <tr class="hover:bg-slate-50/50 transition duration-150">
-                        <td class="p-4 font-bold text-slate-800">${item.name}</td>
-                        <td class="p-4 text-slate-500 font-mono">${item.nationalId}</td>
-                        <td class="p-4 text-slate-600">${item.currentClass}</td>
-                        <td class="p-4 font-semibold text-brand-teal">${item.nextClass}</td>
-                        <td class="p-4">${statusBadge}</td>
-                        <td class="p-4 text-slate-700">${item.parentName}</td>
-                        <td class="p-4 text-slate-500 font-mono">${item.parentPhone}</td>
-                        <td class="p-4 max-w-xs truncate" title="${item.status === 'انتقال' ? item.transferReason : item.notes}">${remarks}</td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+            resetSliderTimer();
         }
 
-        // --- محرك البحث السريع والفلاتر الفورية ---
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+            resetSliderTimer();
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+            resetSliderTimer();
+        }
+
         function filterSubmissionsTable() {
             const searchQuery = document.getElementById('searchBar').value.toLowerCase().trim();
             const selectedClass = document.getElementById('filterClass').value;
@@ -1143,7 +1106,6 @@
             populateSubmissionsTable(filtered);
         }
 
-        // --- تصدير السجلات المباشرة لملفات Excel CSV ---
         function exportToCSV() {
             if (submissions.length === 0) {
                 showToast("لا توجد بيانات", "لا توجد سجلات متاحة للتصدير حالياً.", "warning");
